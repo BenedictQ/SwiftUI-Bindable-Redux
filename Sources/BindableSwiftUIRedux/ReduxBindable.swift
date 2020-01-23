@@ -21,7 +21,7 @@ import Combine
 @available(iOS 13.0, *)
 @propertyWrapper
 public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction>: ObservableObject where Action.State == State,
-Store.Reducer.State == Store.State, Store.State.Store == Store {
+Store.Reducer.Store == Store, Store.State.Store == Store {
     @Published private var state: State
     public weak var store: Store?
 
