@@ -13,14 +13,14 @@ import SwiftUI
 /// not computed properties.
 @available(iOS 13.0, *)
 public protocol ReduxStore: ObservableObject {
-    associatedtype State: ReduxState
+    associatedtype State: ReduxRootState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
     var objectWillChange: ObservableObjectPublisher { get set }
     var subscribers: Set<AnyCancellable> { get set }
 }
 
-extension ReduxStore where Reducer.Store == Self, State.Store == Self {
+extension ReduxStore where Reducer.State == State, State.Store == Self {
     public func initialize() -> Self {
         state.initialize(store: self)
 
@@ -36,11 +36,11 @@ extension ReduxStore where Reducer.Store == Self, State.Store == Self {
     }
 
     public func dispatch<Action: BindingUpdateAction>(_ action: Action) {
-        Reducer.reduce(action, store: self)
+        state = Reducer.reduce(action, state: state)
     }
 
     public func dispatch(_ action: ReduxAction) {
-        Reducer.reduce(action, store: self)
+        state = Reducer.reduce(action, state: state)
     }
 }
 #endif
