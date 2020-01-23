@@ -10,13 +10,13 @@ import Combine
 /// not wrapped by `Published` then you will have to manually subscribe to the property's
 /// publisher can call `objectWillChange.send()` in the subscribtion to trigger UI updates.
 @available(iOS 13.0, *)
-public protocol ReduxState: ObservableObject {
+public protocol ReduxRootState: ObservableObject {
     associatedtype Store: ReduxStore
     init()
     func initialize(store: Store)
 }
 
-extension ReduxState {
+extension ReduxRootState {
     public func initialize(store: Store) { }
 }
 #endif
