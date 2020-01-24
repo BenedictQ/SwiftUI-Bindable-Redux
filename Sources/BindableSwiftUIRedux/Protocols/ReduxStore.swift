@@ -13,7 +13,7 @@ import SwiftUI
 /// not computed properties.
 @available(iOS 13.0, *)
 public protocol ReduxStore: ObservableObject {
-    associatedtype State: ReduxState
+    associatedtype State: ReduxRootState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
     var objectWillChange: ObservableObjectPublisher { get set }
