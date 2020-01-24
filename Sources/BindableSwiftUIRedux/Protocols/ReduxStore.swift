@@ -12,11 +12,10 @@ import SwiftUI
 /// of a ReduxStore should provide `objectWillChange` and `subscribers` as stored properties
 /// not computed properties.
 @available(iOS 13.0, *)
-public protocol ReduxStore: ObservableObject {
+public protocol ReduxStore: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
     associatedtype State: ReduxState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
-    var objectWillChange: ObservableObjectPublisher { get set }
 }
 
 extension ReduxStore where Reducer.State == State, State.Store == Self {
