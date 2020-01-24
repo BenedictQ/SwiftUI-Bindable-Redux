@@ -9,15 +9,12 @@ import Combine
 /// conventional databinding.
 /// 
 /// Unfortunately, the store has to be injected into ReduxBindable instances after calling `init` so that it can be used as a property
-/// wrapper. This should be done in the `initialize` function of a class conforming to ReduxState. The ReduxBindable wrapper
-/// can be accessed by using the `_` prefix (e.g. for a property called `text`, use `_text`.
+/// wrapper. This should be done in the `initialize` function of a class conforming to ReduxState. The `ReduxBindable `wrapper
+/// can be accessed by using the `_` prefix (e.g. for a property called `text`, use `_text`).
 ///
-/// Note that because Combine doesn't automatically support nested ObservableObjects,  then you will have to manually subscribe to the
-/// ReduxBindable's  publisher and call `objectWillChange.send()` on the containing class to trigger UI updates.
+/// Use `wrappedValue` in SwiftUI views (i.e. access as you would a normal property). Setting this value will then cause an action to be dispatched.
 ///
-/// Use wrappedValue in SwiftUI views (i.e. access as you would a normal property). Setting this value will then cause an action to be dispatched.
-///
-/// Use projectedValue in reducers (i.e. use $ prefix on property). Setting this value will cause the stored value to change, which will be published.
+/// Edit `projectedValue` in reducers (i.e. use $ prefix on property). Setting this value will cause the stored value to change.
 @available(iOS 13.0, *)
 @propertyWrapper
 public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction>: ObservableObject where Action.State == State,

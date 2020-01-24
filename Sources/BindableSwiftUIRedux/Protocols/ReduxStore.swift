@@ -7,10 +7,6 @@ import SwiftUI
 /// The store should be initialized by calling
 /// `initialize` as well as `init` before being injected into a view. It was written with
 /// the expectation that this would be done using an `EnvironmentObject`.
-///
-/// The implementation
-/// of a ReduxStore should provide `objectWillChange` and `subscribers` as stored properties
-/// not computed properties.
 @available(iOS 13.0, *)
 public protocol ReduxStore: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
     associatedtype State: ReduxState
