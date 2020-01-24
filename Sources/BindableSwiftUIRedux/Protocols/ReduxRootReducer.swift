@@ -6,7 +6,7 @@
 /// are combined together inside a ReduxRootReducer.
 @available(iOS 13.0, *)
 public protocol ReduxRootReducer {
-    associatedtype State: ReduxRootState
+    associatedtype State: ReduxState
     static func reduce<Action: BindingUpdateAction>(_ action: Action, state: State) -> State
     static func reduce(_ action: ReduxAction, state: State) -> State
 }
