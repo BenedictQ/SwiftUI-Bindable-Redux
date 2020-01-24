@@ -20,10 +20,26 @@ public protocol ReduxStore: ObservableObject {
     var subscribers: Set<AnyCancellable> { get set }
 }
 
-extension ReduxStore where Reducer.Store == Self, State.Store == Self {
+extension ReduxStore where Reducer.State == State, State.Store == Self {
     public func initialize() -> Self {
         state.initialize(store: self)
 
+        subscribeObservableObjectPropagation()
+
+        return self
+    }
+
+    public func dispatch<Action: BindingUpdateAction>(_ action: Action) {
+       state = Reducer.reduce(action, state: state)
+       subscribeObservableObjectPropagation()
+    }
+
+    public func dispatch(_ action: ReduxAction) {
+        state = Reducer.reduce(action, state: state)
+        subscribeObservableObjectPropagation()
+    }
+
+    private func subscribeObservableObjectPropagation() {
         // Currently Combine doesn't support nested ObservableObjects
         subscribers.insert(
             self.state.objectWillChange
@@ -31,16 +47,6 @@ extension ReduxStore where Reducer.Store == Self, State.Store == Self {
                 .sink { _ in
                     self.objectWillChange.send()
         })
-
-        return self
-    }
-
-    public func dispatch<Action: BindingUpdateAction>(_ action: Action) {
-        Reducer.reduce(action, store: self)
-    }
-
-    public func dispatch(_ action: ReduxAction) {
-        Reducer.reduce(action, store: self)
     }
 }
 #endif

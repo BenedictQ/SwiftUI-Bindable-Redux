@@ -6,8 +6,8 @@
 /// are combined together inside a ReduxRootReducer.
 @available(iOS 13.0, *)
 public protocol ReduxRootReducer {
-    associatedtype Store: ReduxStore
-    static func reduce<Action: BindingUpdateAction>(_ action: Action, store: Store)
-    static func reduce(_ action: ReduxAction, store: Store)
+    associatedtype State: ReduxRootState
+    static func reduce<Action: BindingUpdateAction>(_ action: Action, state: State) -> State
+    static func reduce(_ action: ReduxAction, state: State) -> State
 }
 #endif
