@@ -1,6 +1,5 @@
 #if os(iOS)
 import Combine
-import SwiftUI
 
 /// A protocol to which Redux stores must conform.
 ///
