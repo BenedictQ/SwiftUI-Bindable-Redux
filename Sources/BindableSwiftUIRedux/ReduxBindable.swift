@@ -40,7 +40,7 @@ Store.Reducer.State == Store.State, Store.State.Store == Store {
         get {
             return state
         }
-        set {
+        mutating set {
             state = newValue
         }
     }
