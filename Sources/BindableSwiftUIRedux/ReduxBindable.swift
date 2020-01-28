@@ -25,7 +25,7 @@ public struct ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateActio
         get {
             return state
         }
-        set {
+        mutating set {
             let action = Action.init(state: newValue)
             store?.dispatch(action)
         }
