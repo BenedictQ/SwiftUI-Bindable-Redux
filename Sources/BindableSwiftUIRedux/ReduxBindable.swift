@@ -20,7 +20,7 @@ import Combine
 public struct ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction> where Action.State == State,
 Store.Reducer.State == Store.State, Store.State.Store == Store {
     private var state: State
-    public weak var store: Store?
+    public var store: Store?
 
     public var wrappedValue: State {
         get {
