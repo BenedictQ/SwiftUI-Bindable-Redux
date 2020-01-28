@@ -17,9 +17,14 @@ import Combine
 /// Edit `projectedValue` in reducers (i.e. use $ prefix on property). Setting this value will cause the stored value to change.
 @available(iOS 13.0, *)
 @propertyWrapper
-public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction> where Action.State == State,
+public struct ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction> where Action.State == State,
 Store.Reducer.State == Store.State, Store.State.Store == Store {
-    @Published private var state: State
+    private var state: State {
+        didSet {
+            passthrough.send(state)
+        }
+    }
+    private var passthrough = PassthroughSubject<State, Never>()
     public weak var store: Store?
 
     public var wrappedValue: State {
@@ -46,7 +51,7 @@ Store.Reducer.State == Store.State, Store.State.Store == Store {
     }
 
     public var publisher: AnyPublisher<State, Never> {
-        return $state.eraseToAnyPublisher()
+        return passthrough.eraseToAnyPublisher()
     }
 }
 #endif
