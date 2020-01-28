@@ -9,10 +9,10 @@ import Combine
 @available(iOS 13.0, *)
 public protocol ReduxState {
     associatedtype Store: ReduxStore
-    func initialize(store: Store)
+    mutating func initialize(store: Store)
 }
 
 extension ReduxState {
-    public func initialize(store: Store) { }
+    public mutating func initialize(store: Store) { }
 }
 #endif
