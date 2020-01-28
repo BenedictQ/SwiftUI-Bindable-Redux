@@ -17,7 +17,7 @@ import Combine
 /// Edit `projectedValue` in reducers (i.e. use $ prefix on property). Setting this value will cause the stored value to change.
 @available(iOS 13.0, *)
 @propertyWrapper
-public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction>: ObservableObject where Action.State == State,
+public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction> where Action.State == State,
 Store.Reducer.State == Store.State, Store.State.Store == Store {
     @Published private var state: State
     public weak var store: Store?
