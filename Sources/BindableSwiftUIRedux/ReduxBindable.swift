@@ -19,12 +19,7 @@ import Combine
 @propertyWrapper
 public struct ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction> where Action.State == State,
 Store.Reducer.State == Store.State, Store.State.Store == Store {
-    private var state: State {
-        didSet {
-            passthrough.send(state)
-        }
-    }
-    private var passthrough = PassthroughSubject<State, Never>()
+    private var state: State
     public weak var store: Store?
 
     public var wrappedValue: State {
@@ -48,10 +43,6 @@ Store.Reducer.State == Store.State, Store.State.Store == Store {
         set {
             state = newValue
         }
-    }
-
-    public var publisher: AnyPublisher<State, Never> {
-        return passthrough.eraseToAnyPublisher()
     }
 }
 #endif
