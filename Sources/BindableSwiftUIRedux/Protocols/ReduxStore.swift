@@ -10,7 +10,7 @@ import Combine
 /// Note that ObservableObject currently doesn't provide an `objectWillChange` publisher,
 /// so implementations of this will need to instantiate their own in a stored property.
 @available(iOS 13.0, *)
-public protocol ReduxStore: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher, Reducer.State == State, State.Store == Self {
+public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == ObservableObjectPublisher, Reducer.State == State, State.Store == Self {
     associatedtype State: ReduxState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
