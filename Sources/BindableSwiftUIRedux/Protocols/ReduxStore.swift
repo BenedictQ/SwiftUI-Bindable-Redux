@@ -23,15 +23,15 @@ extension ReduxStore {
     }
 
     public func dispatch<Action: BindingUpdateAction>(_ action: Action) {
+         // Inform SwiftUI that state will changed
+        objectWillChange.send()
        state = Reducer.reduce(action, state: state)
-        // Inform SwiftUI that state has changed
-       objectWillChange.send()
     }
 
     public func dispatch(_ action: ReduxAction) {
-        state = Reducer.reduce(action, state: state)
-        // Inform SwiftUI that state has changed
+         // Inform SwiftUI that state will changed
         objectWillChange.send()
+        state = Reducer.reduce(action, state: state)
     }
 }
 #endif
