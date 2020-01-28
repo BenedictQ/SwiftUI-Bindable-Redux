@@ -9,7 +9,6 @@ import Combine
 @available(iOS 13.0, *)
 public protocol ReduxState: ObservableObject {
     associatedtype Store: ReduxStore
-    init()
     func initialize(store: Store)
 }
 
