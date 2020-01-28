@@ -7,7 +7,7 @@ import Combine
 /// The default implementation of initialize does nothing as it will be entirely implementation dependent, and
 /// not requiring initialization is the simplest, and quite likely, case.
 @available(iOS 13.0, *)
-public protocol ReduxState: ObservableObject {
+public protocol ReduxState {
     associatedtype Store: ReduxStore
     func initialize(store: Store)
 }
