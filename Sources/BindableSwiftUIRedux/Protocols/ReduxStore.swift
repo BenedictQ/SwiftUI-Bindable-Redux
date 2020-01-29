@@ -11,7 +11,7 @@ import SwiftUI
 /// Note that ObservableObject currently doesn't provide an `objectWillChange` publisher,
 /// so implementations of this will need to instantiate their own in a stored property.
 @available(iOS 13.0, *)
-public protocol ReduxStore: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
+public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == ObservableObjectPublisher {
     associatedtype State: ReduxState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
