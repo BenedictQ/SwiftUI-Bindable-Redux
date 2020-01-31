@@ -27,7 +27,7 @@ Store.Reducer.State == Store.State, Store.State.Store == Store {
             return state
         }
         set {
-            let action = Action.init(state: (newValue))
+            let action = Action.init(state: newValue)
             store?.dispatch(action)
         }
     }
