@@ -1,4 +1,4 @@
-public typealias Dispatch = (ReduxAction) -> ReduxAction
+public typealias Dispatch = (ReduxAction) -> Void
 public typealias DispatchWrapper = ((@escaping Dispatch) -> Dispatch)
 
 enum Composer {

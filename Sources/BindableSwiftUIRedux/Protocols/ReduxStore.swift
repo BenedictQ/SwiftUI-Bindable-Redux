@@ -28,11 +28,10 @@ extension ReduxStore {
     public var defaultDispatch: Dispatch {
         return { (action: ReduxAction) in
             self.reduce(action)
-            return action
         }
     }
 
-    @discardableResult public func dispatch(_ action: ReduxAction) -> ReduxAction {
+    public func dispatch(_ action: ReduxAction) {
         return storedDispatch(action)
     }
 
