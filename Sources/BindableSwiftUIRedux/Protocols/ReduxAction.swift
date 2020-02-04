@@ -1,7 +1,7 @@
 #if os(iOS)
-/// A protocol which redux actions should conform to.
+/// A protocol which all redux actions should conform to.
 ///
-/// All actions that don't conform to BindingUpdateAction should conform to ReduxAction.
+/// Note that actions associated with binding changes should instead conform to BindingUpdateAction, and gain conformance to ReduxAction from that.
 @available(iOS 13.0, *)
 public protocol ReduxAction { }
 #endif
