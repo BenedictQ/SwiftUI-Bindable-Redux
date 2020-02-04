@@ -64,14 +64,14 @@ extension ReduxStore {
         return { [middlewares] (createStore: @escaping StoreCreator) in
             return { [middlewares] (reducer: Reducer, initialState: State) -> Self in
                 let store = createStore(reducer, initialState)
-                var dispatch: Dispatch = store.dispatch
+                var newDispatch: Dispatch = store.storedDispatch
                 var chain: [(Dispatch) -> Dispatch] = []
-                let dispatchAction = {(action: ReduxAction) in dispatch(action)}
+                let wrappedDispatch = {(action: ReduxAction) in newDispatch(action)}
 
-                chain = middlewares.map { $0(dispatchAction, store.getState) }
-                dispatch = compose(chain)(store.dispatch)
+                chain = middlewares.map { $0(wrappedDispatch, store.getState) }
+                newDispatch = compose(chain)(store.dispatch)
 
-                store.dispatch = dispatch
+                store.storedDispatch = newDispatch
                 return store
             }
         } as! StoreEnhancer
