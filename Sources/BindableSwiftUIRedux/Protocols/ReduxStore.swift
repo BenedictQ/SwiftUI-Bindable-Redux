@@ -76,7 +76,7 @@ extension ReduxStore {
                 let chain = middlewares.map {
                     $0(wrappedDispatch, store.getState)
                 }
-                newDispatch = compose(chain)(store.dispatch)
+                newDispatch = compose(chain)(store.storedDispatch)
 
                 store.storedDispatch = newDispatch
                 return store
