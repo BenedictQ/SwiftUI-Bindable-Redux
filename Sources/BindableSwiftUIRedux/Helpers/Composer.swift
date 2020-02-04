@@ -8,7 +8,8 @@ enum Composer {
                 return dispatches[0](dispatch)
             }
         }
-        return dispatches.reduce(dispatches[0]) { (a: @escaping DispatchWrapper, b: @escaping DispatchWrapper) in
+        let initial: DispatchWrapper = { dispatch in return dispatch }
+        return dispatches.reduce(initial) { (a: @escaping DispatchWrapper, b: @escaping DispatchWrapper) in
             return { (dispatch: @escaping Dispatch) in
                 return a(b(dispatch))
             }
