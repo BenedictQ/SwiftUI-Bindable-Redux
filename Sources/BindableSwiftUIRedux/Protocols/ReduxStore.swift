@@ -21,7 +21,7 @@ public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == 
 }
 
 extension ReduxStore {
-    public typealias StoreCreator = (Reducer, State?) -> Self
+    public typealias StoreCreator = (Reducer.Type, State?) -> Self
     public typealias StoreEnhancer = (StoreCreator) -> StoreCreator
     public typealias Dispatch = (ReduxAction) -> ReduxAction
     public typealias DispatchWrapper = ((Dispatch) -> Dispatch)
@@ -53,20 +53,20 @@ extension ReduxStore {
         return state
     }
 
-    public static func createStore(reducer: Reducer,
+    public static func createStore(reducer: Reducer.Type,
                             preloadedState: State?,
                             enhancer: StoreEnhancer) -> Self {
         return enhancer(createStore)(reducer, preloadedState)
     }
 
-    public static func createStore(reducer: Reducer,
+    public static func createStore(reducer: Reducer.Type,
                             preloadedState: State?) -> Self {
         return Self.init(state: preloadedState)
     }
 
     public static func applyMiddleware(middlewares: [Middleware]) -> StoreEnhancer {
         return { [middlewares] (createStore: @escaping StoreCreator) in
-            return { [middlewares] (reducer: Reducer, initialState: State) -> Self in
+            return { [middlewares] (reducer: Reducer.Type, initialState: State) -> Self in
                 let store = createStore(reducer, initialState)
                 var newDispatch: Dispatch = store.storedDispatch
                 var chain: [(Dispatch) -> Dispatch] = []
