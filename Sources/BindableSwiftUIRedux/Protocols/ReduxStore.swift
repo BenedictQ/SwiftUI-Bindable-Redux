@@ -27,7 +27,7 @@ extension ReduxStore {
     typealias DispatchWrapper = ((Dispatch) -> Dispatch)
     typealias Middleware = (Dispatch, () -> State) -> DispatchWrapper
 
-    var dispatch: Dispatch {
+    public var defaultDispatch: Dispatch {
         return { (action: ReduxAction) in
             self.reduce(action)
             return action
