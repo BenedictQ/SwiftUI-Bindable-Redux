@@ -60,7 +60,7 @@ extension ReduxStore {
     }
 
     public static func createStore(reducer: Reducer.Type,
-                            preloadedState: State?) -> Self {
+                                   preloadedState: State?) -> Self {
         return Self.init(state: preloadedState)
     }
 
