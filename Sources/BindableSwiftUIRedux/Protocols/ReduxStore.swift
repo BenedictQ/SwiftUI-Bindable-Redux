@@ -16,7 +16,7 @@ public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == 
     associatedtype State: ReduxState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
-    var dispatch: Dispatch { get set }
+    var storedDispatch: Dispatch { get set }
     init(state: State?)
 }
 
@@ -32,6 +32,10 @@ extension ReduxStore {
             self.reduce(action)
             return action
         }
+    }
+
+    @discardableResult public func dispatch(_ action: ReduxAction) -> ReduxAction {
+        return storedDispatch(action)
     }
 
     public func initialize() -> Self {
