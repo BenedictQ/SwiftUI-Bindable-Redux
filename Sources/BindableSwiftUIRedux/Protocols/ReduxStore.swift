@@ -23,8 +23,6 @@ public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == 
 extension ReduxStore {
     public typealias StoreCreator = (Reducer.Type, State?) -> Self
     public typealias StoreEnhancer = (@escaping StoreCreator) -> StoreCreator
-    public typealias Dispatch = (ReduxAction) -> ReduxAction
-    public typealias DispatchWrapper = ((@escaping Dispatch) -> Dispatch)
     public typealias Middleware = (@escaping Dispatch, @escaping () -> State) -> DispatchWrapper
 
     public var defaultDispatch: Dispatch {
@@ -76,23 +74,10 @@ extension ReduxStore {
                 let chain = middlewares.map {
                     $0(wrappedDispatch, store.getState)
                 }
-                newDispatch = compose(chain)(store.storedDispatch)
+                newDispatch = Composer.compose(chain)(store.storedDispatch)
 
                 store.storedDispatch = newDispatch
                 return store
-            }
-        }
-    }
-
-    static func compose(_ dispatches: [DispatchWrapper]) -> DispatchWrapper {
-        if dispatches.count == 1 {
-            return { (dispatch: @escaping Dispatch) in
-                return dispatches[0](dispatch)
-            }
-        }
-        return dispatches.reduce(dispatches[0]) { (a: @escaping DispatchWrapper, b: @escaping DispatchWrapper) in
-            return { (dispatch: @escaping Dispatch) in
-                return a(b(dispatch))
             }
         }
     }
