@@ -22,10 +22,10 @@ public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == 
 
 extension ReduxStore {
     public typealias StoreCreator = (Reducer.Type, State?) -> Self
-    public typealias StoreEnhancer = (StoreCreator) -> StoreCreator
+    public typealias StoreEnhancer = (@escaping StoreCreator) -> StoreCreator
     public typealias Dispatch = (ReduxAction) -> ReduxAction
-    public typealias DispatchWrapper = ((Dispatch) -> Dispatch)
-    public typealias Middleware = (Dispatch, () -> State) -> DispatchWrapper
+    public typealias DispatchWrapper = ((@escaping Dispatch) -> Dispatch)
+    public typealias Middleware = (@escaping Dispatch, @escaping () -> State) -> DispatchWrapper
 
     public var defaultDispatch: Dispatch {
         return { (action: ReduxAction) in
@@ -65,25 +65,28 @@ extension ReduxStore {
     }
 
     public static func applyMiddleware(middlewares: [Middleware]) -> StoreEnhancer {
-        return { [middlewares] (createStore: @escaping StoreCreator) in
-            return { [middlewares] (reducer: Reducer.Type, initialState: State) -> Self in
+        return { (createStore: @escaping StoreCreator) in
+            return { (reducer: Reducer.Type, initialState: State?) -> Self in
                 let store = createStore(reducer, initialState)
                 var newDispatch: Dispatch = store.storedDispatch
-                var chain: [(Dispatch) -> Dispatch] = []
-                let wrappedDispatch = {(action: ReduxAction) in newDispatch(action)}
+                let wrappedDispatch = {(action: ReduxAction) in
+                    newDispatch(action)
+                }
 
-                chain = middlewares.map { $0(wrappedDispatch, store.getState) }
+                let chain = middlewares.map {
+                    $0(wrappedDispatch, store.getState)
+                }
                 newDispatch = compose(chain)(store.dispatch)
 
                 store.storedDispatch = newDispatch
                 return store
             }
-        } as! StoreEnhancer
+        }
     }
 
     static func compose(_ dispatches: [DispatchWrapper]) -> DispatchWrapper {
         return dispatches.reduce(dispatches[0]) { (a: @escaping DispatchWrapper, b: @escaping DispatchWrapper) in
-            return { (dispatch: Dispatch) in
+            return { (dispatch: @escaping Dispatch) in
                 return a(b(dispatch))
             }
         }
