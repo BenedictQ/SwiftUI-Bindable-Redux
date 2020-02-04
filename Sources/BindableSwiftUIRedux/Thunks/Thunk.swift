@@ -1,3 +1,6 @@
+/// Simple object which is used to wrap a Thunk action in the `ReduxAction` type so that it can be dispatched to the store.
+///
+/// Apply the `ThunkMiddleware` to the store to enable handling these Thunk actions.
 public struct Thunk<Store: ReduxStore>: ReduxAction {
     public typealias ThunkAction = (@escaping Dispatch, () -> Store.State) -> Void
     public var action: ThunkAction
