@@ -9,8 +9,6 @@
 public protocol ReduxRootReducer {
     associatedtype State: ReduxState
     /// This should be a pure function to match the Redux contract.
-    static func reduce<Action: BindingUpdateAction>(_ action: Action, state: State) -> State
-    /// This should be a pure function to match the Redux contract.
     static func reduce(_ action: ReduxAction, state: State) -> State
 }
 #endif

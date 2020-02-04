@@ -6,7 +6,7 @@
 /// when the value changes. This action carries only the value of the property, and will be received by a RootReducer
 /// which will update the correct property on the state.
 @available(iOS 13.0, *)
-public protocol BindingUpdateAction {
+public protocol BindingUpdateAction: ReduxAction {
     associatedtype State
     init(state: State)
     var state: State { get }
