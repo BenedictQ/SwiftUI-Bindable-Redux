@@ -55,13 +55,13 @@ extension ReduxStore {
         return self
     }
 
-    public func reduce(_ action: ReduxAction) {
+    func reduce(_ action: ReduxAction) {
         // Inform SwiftUI that state has changed
         objectWillChange.send()
         state = Reducer.reduce(action, state: state)
     }
 
-    public func getState() -> State {
+    func getState() -> State {
         return state
     }
 
