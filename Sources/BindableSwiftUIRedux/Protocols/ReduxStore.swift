@@ -8,7 +8,7 @@ import Combine
 /// `initialize` as well as `init` before being injected into a view. It was written with
 /// the expectation that this would be done using an `EnvironmentObject`.
 ///
-/// Note that ObservableObject currently doesn't provide an `objectWillChange` publisher,
+/// Note that `ObservableObject` currently doesn't provide an `objectWillChange` publisher,
 /// so implementations of this will need to instantiate their own in a stored property.
 ///
 /// ReduxStores should be created using the static `createStore` function, and not the initializer.
@@ -17,7 +17,7 @@ import Combine
 /// You can write your own middleware by conforming to the `Middleware` protocol.
 @available(iOS 13.0, *)
 public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == ObservableObjectPublisher, Reducer.State == State, State.Store == Self {
-    associatedtype State: ReduxState
+    associatedtype State: ReduxRootState
     associatedtype Reducer: ReduxRootReducer
     var state: State { get set }
     /// The storedDispatch property for adding custom middleware.

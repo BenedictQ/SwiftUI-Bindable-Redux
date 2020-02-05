@@ -3,8 +3,7 @@ import Combine
 
 /// A protocol for state slices to conform to.
 ///
-/// The root state type, which matches the associated `state` property type of the ReduxStore, must be of type `ReduxState`.
-/// In addition, any subsidiary state slices inside this root state should conform to this protocol.
+/// Any subsidiary state slices of a `ReduxRootState` should conform to this protocol.
 ///
 /// The state will be initialized with the store, allowing custom binding and publishers to dispatch actions.
 /// The default implementation of initialize does nothing as it will be entirely implementation dependent, and
