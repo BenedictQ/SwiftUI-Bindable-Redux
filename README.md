@@ -1,4 +1,4 @@
-# BindableSwiftUIRedux
+# SwiftUIBindableRedux
 
 ## Embracing SwiftUI while using Redux
 This is a Redux framework for SwiftUI which embraces SwiftUI's data design. Views can use two way data binding alongside redux state by applying the `@ReduxBindable` property wrapper instead of `@Published`. In addition, injecting the store using `EnvironmentObject` is used as a means to publish changes to state. When the state is updated by an action, the store will publish an `objectWillChange` notification. SwiftUI will update any views which declare a wrapped `@EnvironmentObject` property when the object it wraps sends out that notification. Using `EnvironmentObject` has the double benefit of allowing the store to be injected at any level of the view hierarchy without passing it down through constructors.
