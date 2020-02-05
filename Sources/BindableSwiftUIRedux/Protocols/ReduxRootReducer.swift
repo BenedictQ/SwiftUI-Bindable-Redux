@@ -8,7 +8,10 @@
 @available(iOS 13.0, *)
 public protocol ReduxRootReducer {
     associatedtype State: ReduxState
-    /// This should be a pure function to match the Redux contract.
+    /// Reduce function to update the state with the given action.
+    ///
+    /// This should be a pure function to match the Redux contract. The function should not mutate the input state, but instead
+    /// return a new state object.
     static func reduce(_ action: ReduxAction, state: State) -> State
 }
 #endif
