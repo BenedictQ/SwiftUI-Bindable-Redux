@@ -8,7 +8,7 @@ The libarary follows the Protocol Oriented Programming design principle by provi
 
 ## EnvironmentObject Redux stores
 The library uses `EnvironmentObject` to inject the store. Stores must be initialized before being injected. The `createStore` function is used to create stores. allowing for the injection of state, or store enhancers (such as middleware). For example, to pass a ReduxStore called BaseStore into a view called ContentView.
-```
+```swift
 let rootStore = RootStore.createStore(
     reducer: RootReducer.self,
     preloadedState: nil,
@@ -22,7 +22,7 @@ let rootStore = RootStore.createStore(
 let contentView = RootView().environmentObject(rootStore)
 ```
 
-```
+```swift
 struct Example: View {
     @EnvironmentObject var store: CounterStore
 
@@ -48,7 +48,7 @@ struct Example: View {
 ## Two way databinding synthesised with Redux actions
 The library provides the `@ReduxBindable` property wrapper to enable you to store state which is used in two way binding in the Redux store. `ReduxBindable` ensures that state updates are only performed by actions by acting as a middle man between the view and the state. The View has no knowledge of this and can bind to the property using standard SwiftUI syntax. Unfortunately in order to make `ReduxBindable` a property wrapper which dispatches actions to the store, State implementations require some boilerplate in their `initialize` function to inject the store into these properties. The `initialize` function is called by a `ReduxStore`'s `initialize`.
 
-```
+```swift
 final class ExampleState: ReduxState {
     // Declare action type in generic of property wrapper
     @ReduxBindable<RootStore, String, UpdateExampleStringAction> var exampleString: String = ""
@@ -65,7 +65,7 @@ final class ExampleState: ReduxState {
 }
 ```
 
-```
+```swift
 enum ExampleReducer: ReduxRootReducer {
     static func reduce(_ action: ReduxAction, state: ExampleState) -> ExampleState {
         let newState = state.deepcopy()
@@ -84,7 +84,7 @@ enum ExampleReducer: ReduxRootReducer {
 }
 ```
 
-```
+```swift
 struct Example: View {
     @EnvironmentObject var store: RootStore
     
@@ -99,7 +99,7 @@ struct Example: View {
 
 The library provides a `Middleware` protocol that can be conformed to to provide a pattern for writing your own middleware. `ThunkMiddleware` ships with the package.
 
-```
+```swift
 enum LoggingMiddleware: Middleware {
     typealias Store = RootStore
     static var middleware: Store.Middleware {
@@ -119,7 +119,7 @@ enum LoggingMiddleware: Middleware {
 }
 ```
 
-```
+```swift
 let rootStore = RootStore.createStore(
     reducer: RootReducer.self,
     preloadedState: nil,
@@ -142,7 +142,7 @@ I've not fully investigated the performance implications of using using a centra
 
 Introducing a container pattern may help avoid unnecessary calls on presentational `body` components:
 
-```
+```swift
 struct Container: View {
 @EnvironmentObject var store: RootStore
     var body: some View {
