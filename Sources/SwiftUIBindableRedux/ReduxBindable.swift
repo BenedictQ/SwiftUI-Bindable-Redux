@@ -1,4 +1,3 @@
-#if os(iOS)
 import Combine
 
 /// `ReduxBindable` is a property wrapper that should be added to properties on `ReduxState` objects which
@@ -17,7 +16,6 @@ import Combine
 /// Edit `projectedValue` in reducers (i.e. use $ prefix on property). Setting this value will cause the stored value to change.
 ///
 /// Use the `ReduxBindable` instance (i.e. use _ prefix on property) in `initialize` or `deepcopy` functions.
-@available(iOS 13.0, *)
 @propertyWrapper
 public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdateAction>: ObservableObject where Action.State == State {
     @Published private var state: State
@@ -50,4 +48,3 @@ public final class ReduxBindable<Store: ReduxStore, State, Action: BindingUpdate
         return $state.eraseToAnyPublisher()
     }
 }
-#endif

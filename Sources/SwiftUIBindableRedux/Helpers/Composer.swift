@@ -1,4 +1,6 @@
+@available(iOS 13.0, *)
 public typealias Dispatch = (ReduxAction) -> Void
+
 public typealias DispatchWrapper = ((@escaping Dispatch) -> Dispatch)
 
 /// Container for the `compose` function.

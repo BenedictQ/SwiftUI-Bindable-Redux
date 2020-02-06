@@ -1,11 +1,9 @@
-#if os(iOS)
 ///A protocol to which a `RootReducer` implementation must conform.
 ///
 /// A `ReduxStore` should have an associated `RootReducer` which conforms to this protocol.
 /// Sub-reducers can be created and need not conform to this protocol, as long as they
 /// are combined together insidethe `reduce` function of  a `ReduxRootReducer`, and are in themselves pure functions to conform to
 /// the Redux contract.
-@available(iOS 13.0, *)
 public protocol ReduxRootReducer {
     associatedtype State: ReduxRootState
     /// Reduce function to update the state with the given action.
@@ -15,4 +13,3 @@ public protocol ReduxRootReducer {
     /// `reduce` function.
     static func reduce(_ action: ReduxAction, state: State) -> State
 }
-#endif

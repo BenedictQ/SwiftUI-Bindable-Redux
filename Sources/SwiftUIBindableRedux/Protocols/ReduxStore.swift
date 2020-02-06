@@ -1,4 +1,3 @@
-#if os(iOS)
 import Combine
 
 
@@ -15,7 +14,6 @@ import Combine
 /// Store enhancers can optionally be passed into the `createStore` function. The most likely
 /// store enhancer will be the `applyMiddleware` function, which takes in an array of `Middleware`.
 /// You can write your own middleware by conforming to the `Middleware` protocol.
-@available(iOS 13.0, *)
 public protocol ReduxStore: ObservableObject where ObjectWillChangePublisher == ObservableObjectPublisher, Reducer.State == State, State.Store == Self {
     associatedtype State: ReduxRootState
     associatedtype Reducer: ReduxRootReducer
@@ -103,5 +101,3 @@ extension ReduxStore {
         }
     }
 }
-#endif
-

@@ -1,4 +1,3 @@
-#if os(iOS)
 import Combine
 
 /// A protocol for state slices to conform to.
@@ -10,7 +9,6 @@ import Combine
 /// not requiring initialization is the simplest, and quite likely, case.
 ///
 /// State must be class bound at this stage to integrate with SwiftUI state management.
-@available(iOS 13.0, *)
 public protocol ReduxState: AnyObject {
     associatedtype Store: ReduxStore
     func initialize(store: Store)
@@ -19,4 +17,3 @@ public protocol ReduxState: AnyObject {
 extension ReduxState {
     public func initialize(store: Store) { }
 }
-#endif
