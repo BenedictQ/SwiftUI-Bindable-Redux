@@ -134,8 +134,8 @@ let rootStore = RootStore.createStore(
 ## Example projects
 See the example projects for further examples of how to use the package:
 
-Simple Counter example project to show how the library works - https://github.com/BenedictQ/CounterBindableRedux
-Sign-up example project to show examples of multiple state slices and reducers - https://github.com/BenedictQ/SignUpBindableRedux
+* Simple Counter example project to show how the library works - https://github.com/BenedictQ/CounterBindableRedux
+* Sign-up example project to show examples of multiple state slices and reducers - https://github.com/BenedictQ/SignUpBindableRedux
 
 ## Performance impact
 I've not fully investigated the performance implications of using using a central `EnvironmentObject` to store state. Any view which declares the `ReduxStore` property wrapped with `@EnvironmentObject` will have its body recomputed on every update. This will happen even if it only uses the store for dispatching actions, or if the slice of state it uses is not updated. This is because SwiftUI watches the `objectWillChange` notification on any `@EnvironmentObject` to invalidate the body, which is sent every time an action is dispatched. However, re-initializing views is cheap, and SwiftUI will only re-render views which have actually changed however, so I don't think this will have a significant performance impact. In addition, it's unlikely that the impact will be much greater than using `ObservableObject` in the MVVM pattern, as this suffers from the same issue. In any case, I expect the benefits of the Redux pattern to outweight the possible cost. 
